@@ -7,8 +7,8 @@
 :root{--ink:#20242b;--mut:#5d6470;--line:#d9d3c6;--paper:#f6f2e9;--card:#fffdf8}
 body{font-family:'Source Sans 3',Segoe UI,sans-serif;color:var(--ink);background:#e9e4d8}
 [contenteditable]{outline:none;border-radius:3px;transition:.12s}
-[contenteditable]:hover{box-shadow:0 0 0 2px #c9a23355}
-[contenteditable]:focus{box-shadow:0 0 0 2px #d99a1f;background:#fffbe9}
+[contenteditable]:hover{box-shadow:0 0 0 2px rgba(201,162,51,.45)}
+[contenteditable]:focus{box-shadow:0 0 0 2px #d99a1f;background:rgba(255,214,90,.20)}
 [contenteditable]:empty:after{content:attr(data-ph);color:#b3ab9a;font-style:italic;font-weight:400;pointer-events:none}
 
 .bar{position:sticky;top:0;z-index:50;background:#13314c;color:#fff;display:flex;
@@ -21,6 +21,13 @@ body{font-family:'Source Sans 3',Segoe UI,sans-serif;color:var(--ink);background
 .bar button.ghost{background:transparent;border:1.5px solid #5d86ad}
 .bar button.png{background:#1e8e5a} .bar button.png:hover{background:#27a96c}
 .bar button.jpg{background:#7a5cb0} .bar button.jpg:hover{background:#8f6ec8}
+.bar .zoom{display:inline-flex;align-items:center;gap:3px;background:#0e2740;border-radius:7px;padding:2px 3px}
+.bar .zoom button{padding:5px 10px;background:#2e6fae;font-size:15px;line-height:1}
+.bar .zoom #zlbl{min-width:44px;text-align:center;font-size:12px;font-weight:700}
+.savedlbl{font-size:11.5px;color:#bfe0f5;opacity:0;transition:.3s;min-width:60px}
+.bar .textcol{display:inline-flex;align-items:center;gap:5px;color:#bfe0f5;font-size:12px;font-weight:600}
+.bar .textcol button{width:18px;height:18px;border-radius:50%;padding:0;border:1px solid rgba(255,255,255,.5);cursor:pointer}
+.slot.active{outline:3px solid #2e6fae;outline-offset:1px}
 
 .page{width:2680px;padding:42px 44px 36px;margin:0 auto;background:var(--paper)}
 .title{background:linear-gradient(100deg,#0f2740,#1d4365 60%,#11314c);color:#fff;
@@ -50,8 +57,15 @@ body{font-family:'Source Sans 3',Segoe UI,sans-serif;color:var(--ink);background
 .imggroup{margin:0}
 .mri,.refimg{position:relative;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#0c0c0c;display:flex;flex-direction:column}
 .mri{margin:8px 12px 0}
-.mri img{width:100%;display:block;max-height:215px;object-fit:contain;background:#000}
-.refimg img{width:100%;height:300px;object-fit:contain;background:#0c0c0c;display:block}
+.imgbox{width:100%;background:#000;overflow:hidden;resize:both;display:block;position:relative;min-height:70px}
+.mri .imgbox{height:200px}
+.refimg .imgbox{height:300px}
+.imgbox img{width:100%;height:100%;object-fit:contain;display:block;transform-origin:center center;cursor:grab;touch-action:none}
+.imgbox img.dragging{cursor:grabbing}
+.imgbox::-webkit-resizer{background:#2e6fae}
+.imgzoom{position:absolute;left:5px;bottom:5px;display:flex;gap:3px;opacity:0;transition:.12s;z-index:7}
+.slot:hover .imgzoom,.slot.active .imgzoom{opacity:1}
+.imgzoom button{width:24px;height:22px;border:0;border-radius:5px;background:rgba(20,49,76,.92);color:#fff;font-size:14px;font-weight:800;cursor:pointer;line-height:1}
 .cap{font-size:11px;color:#cdd2da;background:#181818;padding:5px 9px;line-height:1.3}
 .cap b{color:#fff}
 .refimg .cap{font-size:11.5px;color:#d2d6dd;padding:7px 10px;flex:1}
@@ -121,8 +135,10 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 .rowdel{opacity:.45;transition:.12s} .tctl:hover .rowdel{opacity:1}
 .tblctl{margin-top:10px;display:flex;gap:8px}
 
-.exporting .bar,.exporting .delbtn,.exporting .addbtn,.exporting .imgbtn,.exporting .slot.empty,
+.exporting .bar,.exporting .delbtn,.exporting .addbtn,.exporting .imgbtn,.exporting .imgzoom,.exporting .slot.empty,
 .exporting .tctl,.exporting .coldel,.exporting .tblctl,.exporting .tblhint{display:none!important}
+.exporting .imgbox{resize:none!important}
+.exporting .slot.active{outline:none!important}
 .exporting [contenteditable]:hover,.exporting [contenteditable]:focus{box-shadow:none;background:transparent}
 
 /* ============ iPhone / iPad — edição confortável no ecrã ============ */
@@ -173,7 +189,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 @media print{
  @page{size:2010px 1540px;margin:0}
  body{background:#fff}
- .bar,.delbtn,.addbtn,.imgbtn,.slot.empty,.tctl,.coldel,.tblctl,.tblhint{display:none!important}
+ .bar,.delbtn,.addbtn,.imgbtn,.imgzoom,.slot.empty,.tctl,.coldel,.tblctl,.tblhint{display:none!important}
+ .imgbox{resize:none!important}
+ .slot.active{outline:none!important}
  .page{width:2680px!important;padding:26px 30px!important}
  .grid{grid-template-columns:repeat(6,1fr)!important;gap:16px!important}
  .foot{grid-template-columns:1.55fr 1fr!important}
@@ -187,11 +205,21 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 
 <div class="bar">
   <b>QUADRO EDITÁVEL</b>
-  <span class="hint">Editar: clique no texto · Adicionar: «＋ tópico / ＋ imagem» · Remover: passe o rato e clique no «✕» vermelho · Trocar foto: «🖼».</span>
+  <span class="hint">Texto: clicar e escrever · «＋»/«✕» add/remover · Imagem: <b>arrasta para mover</b>, roda do rato ou «＋－» para zoom, canto p/ redimensionar a moldura, «🖼» trocar, <b>Ctrl+V</b> para colar print.</span>
+  <span class="textcol">Cor:
+    <button onmousedown="event.preventDefault()" onclick="setColor('#20242b')" style="background:#20242b" title="Preto"></button>
+    <button onmousedown="event.preventDefault()" onclick="setColor('#ffffff')" style="background:#fff" title="Branco"></button>
+    <button onmousedown="event.preventDefault()" onclick="setColor('#15527e')" style="background:#15527e" title="Azul"></button>
+    <button onmousedown="event.preventDefault()" onclick="setColor('#b3343a')" style="background:#b3343a" title="Vermelho"></button>
+    <button onmousedown="event.preventDefault()" onclick="setColor('#2f7d4f')" style="background:#2f7d4f" title="Verde"></button>
+  </span>
+  <span class="zoom"><button onclick="zoomBy(-0.1)" title="Reduzir">&minus;</button><span id="zlbl">100%</span><button onclick="zoomBy(0.1)" title="Aumentar">&plus;</button></span>
   <button class="png" onclick="savePNG()">&#128247; Guardar PNG</button>
   <button class="jpg" onclick="saveJPG()">&#128247; Guardar JPG (≤300 KB)</button>
   <button onclick="window.print()">&#128424; Imprimir / PDF</button>
   <button class="ghost" onclick="exportHTML()">&#128190; Exportar HTML</button>
+  <button class="ghost" onclick="clearSaved()" title="Apagar alterações guardadas">&#128465;</button>
+  <span id="savedlbl" class="savedlbl"></span>
 </div>
 
 <div class="page" id="doc">
@@ -209,9 +237,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
       <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
-      <div class="musc"><span class="tag">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
-      <div class="rm"><span class="tag tag-rm">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
-      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…)</small></div><input type="file" accept="image/*" hidden></figure></div>
+      <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
+      <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
+      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="block"><div class="bh" contenteditable="true">CLÍNICA / SINAIS</div><ul class="elist"><li contenteditable="true" data-ph="Sinal / sintoma…"></li></ul></div>
       <div class="block"><div class="bh" contenteditable="true">CAUSAS</div><ul class="elist"><li contenteditable="true" data-ph="Causa…"></li></ul></div>
       
@@ -223,9 +251,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
       <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
-      <div class="musc"><span class="tag">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
-      <div class="rm"><span class="tag tag-rm">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
-      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…)</small></div><input type="file" accept="image/*" hidden></figure></div>
+      <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
+      <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
+      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="block"><div class="bh" contenteditable="true">CLÍNICA / SINAIS</div><ul class="elist"><li contenteditable="true" data-ph="Sinal / sintoma…"></li></ul></div>
       <div class="block"><div class="bh" contenteditable="true">CAUSAS</div><ul class="elist"><li contenteditable="true" data-ph="Causa…"></li></ul></div>
       
@@ -237,9 +265,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
       <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
-      <div class="musc"><span class="tag">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
-      <div class="rm"><span class="tag tag-rm">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
-      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…)</small></div><input type="file" accept="image/*" hidden></figure></div>
+      <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
+      <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
+      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="block"><div class="bh" contenteditable="true">CLÍNICA / SINAIS</div><ul class="elist"><li contenteditable="true" data-ph="Sinal / sintoma…"></li></ul></div>
       <div class="block"><div class="bh" contenteditable="true">CAUSAS</div><ul class="elist"><li contenteditable="true" data-ph="Causa…"></li></ul></div>
       
@@ -251,9 +279,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
       <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
-      <div class="musc"><span class="tag">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
-      <div class="rm"><span class="tag tag-rm">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
-      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…)</small></div><input type="file" accept="image/*" hidden></figure></div>
+      <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
+      <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
+      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="block"><div class="bh" contenteditable="true">CLÍNICA / SINAIS</div><ul class="elist"><li contenteditable="true" data-ph="Sinal / sintoma…"></li></ul></div>
       <div class="block"><div class="bh" contenteditable="true">CAUSAS</div><ul class="elist"><li contenteditable="true" data-ph="Causa…"></li></ul></div>
       
@@ -265,9 +293,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
       <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
-      <div class="musc"><span class="tag">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
-      <div class="rm"><span class="tag tag-rm">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
-      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…)</small></div><input type="file" accept="image/*" hidden></figure></div>
+      <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
+      <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
+      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="block"><div class="bh" contenteditable="true">CLÍNICA / SINAIS</div><ul class="elist"><li contenteditable="true" data-ph="Sinal / sintoma…"></li></ul></div>
       <div class="block"><div class="bh" contenteditable="true">CAUSAS</div><ul class="elist"><li contenteditable="true" data-ph="Causa…"></li></ul></div>
       
@@ -279,9 +307,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
       <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
-      <div class="musc"><span class="tag">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
-      <div class="rm"><span class="tag tag-rm">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
-      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…)</small></div><input type="file" accept="image/*" hidden></figure></div>
+      <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
+      <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
+      <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="block"><div class="bh" contenteditable="true">CLÍNICA / SINAIS</div><ul class="elist"><li contenteditable="true" data-ph="Sinal / sintoma…"></li></ul></div>
       <div class="block"><div class="bh" contenteditable="true">CAUSAS</div><ul class="elist"><li contenteditable="true" data-ph="Causa…"></li></ul></div>
       
@@ -305,7 +333,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
   <div class="card hy">
     <div class="cardh" contenteditable="true">ALTO RENDIMENTO &mdash; NÃO PODE FALTAR</div>
     <ul class="hybul elist"><li contenteditable="true" data-ph="Ponto importante…"></li></ul>
-    <div class="gallery imggroup"><figure class="refimg slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem de referência…</small></div><input type="file" accept="image/*" hidden></figure><figure class="refimg slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem de referência…</small></div><input type="file" accept="image/*" hidden></figure></div>
+    <div class="gallery imggroup"><figure class="refimg slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem de referência… · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure><figure class="refimg slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem de referência… · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
     <div class="foot2" contenteditable="true" data-ph="Nota de rodapé…"></div>
   </div>
 
@@ -363,6 +391,50 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     d.addEventListener('click',function(){li.remove();});
     li.appendChild(d);
   }
+  function wireImage(box){
+    if(!box || box.dataset.w) return; var img=box.querySelector('img'); if(!img) return;
+    box.dataset.w='1';
+    function get(){ try{return JSON.parse(img.dataset.tf);}catch(e){return {x:0,y:0,s:1};} }
+    function set(st){ img.dataset.tf=JSON.stringify(st);
+      img.style.transform='translate('+st.x+'px,'+st.y+'px) scale('+st.s+')'; }
+    set(get());
+    var drag=false,sx,sy,o;
+    img.addEventListener('pointerdown',function(e){ drag=true; try{img.setPointerCapture(e.pointerId);}catch(_){}
+      sx=e.clientX;sy=e.clientY;o=get();img.classList.add('dragging');
+      var sl=box.closest('.slot'); if(sl) setActive(sl); e.preventDefault();});
+    img.addEventListener('pointermove',function(e){ if(!drag)return; var st=get();
+      st.x=o.x+(e.clientX-sx); st.y=o.y+(e.clientY-sy); set(st);});
+    function end(){drag=false;img.classList.remove('dragging');}
+    img.addEventListener('pointerup',end); img.addEventListener('pointercancel',end);
+    box.addEventListener('wheel',function(e){ e.preventDefault(); var st=get();
+      st.s=Math.max(0.2,Math.min(6,Math.round((st.s+(e.deltaY<0?0.08:-0.08))*100)/100)); set(st);},{passive:false});
+    var ov=document.createElement('div'); ov.className='imgzoom'; ov.contentEditable='false';
+    ov.innerHTML='<button data-z="out" title="Diminuir imagem">&minus;</button>'
+      +'<button data-z="in" title="Aumentar imagem">&plus;</button>'
+      +'<button data-z="rst" title="Repor posição/zoom">&#8635;</button>';
+    box.appendChild(ov);
+    ov.addEventListener('click',function(e){ var z=e.target.getAttribute('data-z'); if(!z)return;
+      var st=get();
+      if(z==='in')st.s=Math.min(6,Math.round((st.s+0.1)*100)/100);
+      else if(z==='out')st.s=Math.max(0.2,Math.round((st.s-0.1)*100)/100);
+      else st={x:0,y:0,s:1}; set(st); });
+  }
+  function setSlotImage(s,src){
+    if(s.classList.contains('musclot')){
+      var svg=s.querySelector('svg'); if(svg)svg.remove();
+      var ph0=s.querySelector('.ph'); if(ph0)ph0.remove(); s.classList.remove('empty');
+      var im0=s.querySelector('img'); if(!im0){im0=document.createElement('img');im0.style.maxWidth='250px';
+        s.insertBefore(im0, s.querySelector('input'));} im0.src=src; return;
+    }
+    s.classList.remove('empty');
+    var ph=s.querySelector('.ph'); if(ph)ph.remove();
+    var box=s.querySelector('.imgbox');
+    if(!box){box=document.createElement('div');box.className='imgbox';
+      var im=document.createElement('img');box.appendChild(im);
+      s.insertBefore(box, s.querySelector('input'));}
+    var bi=box.querySelector('img'); bi.dataset.tf=''; bi.style.transform=''; bi.src=src;
+    wireImage(box);
+  }
   function bindSlot(s){
     if(s.dataset.b) return; s.dataset.b='1';
     var inp=s.querySelector(':scope > input[type=file]');
@@ -371,14 +443,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     s.appendChild(t);
     if(inp) inp.addEventListener('change',function(){
       var f=inp.files[0]; if(!f)return; var r=new FileReader();
-      r.onload=function(){
-        var img=s.querySelector(':scope > img');
-        if(!img){ s.classList.remove('empty'); var ph=s.querySelector('.ph'); if(ph)ph.remove();
-          var svg=s.querySelector('svg'); if(svg)svg.remove();
-          img=document.createElement('img'); s.insertBefore(img,inp.nextSibling);
-          if(s.classList.contains('musclot')) img.style.maxWidth='250px'; }
-        img.src=r.result;
-      }; r.readAsDataURL(f);
+      r.onload=function(){ setSlotImage(s,r.result); }; r.readAsDataURL(f);
     });
     if(!s.classList.contains('nodelete')){
       var d=mk('button','delbtn sl','&times;'); d.contentEditable='false'; d.title='Remover imagem';
@@ -389,9 +454,8 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
   function newSlot(group){
     var ref=group.classList.contains('gallery');
     var fig=mk('figure',(ref?'refimg':'mri')+' slot empty',
-      '<div class="ph">&#65291; Adicionar imagem</div><input type="file" accept="image/*" hidden>');
-    group.appendChild(fig); bindSlot(fig);
-    fig.querySelector('input').click();
+      '<div class="ph">&#65291; Cola (Ctrl+V) ou clica «trocar»</div><input type="file" accept="image/*" hidden>');
+    group.appendChild(fig); bindSlot(fig); setActive(fig);
   }
 
   function inject(){
@@ -410,6 +474,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       g.parentNode.insertBefore(add, g.nextSibling);
     });
     document.querySelectorAll('.musclot').forEach(bindSlot);
+    document.querySelectorAll('.imgbox').forEach(wireImage);
     setupTable();
     document.querySelectorAll('.chipgroup').forEach(function(g){
       if(g.dataset.c)return; g.dataset.c='1';
@@ -428,7 +493,80 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       g.parentNode.insertBefore(add,g.nextSibling);
     });
   }
+  // ===== zoom do quadro =====
+  var _z=1;
+  window.zoomBy=function(d){ _z=Math.max(.3,Math.min(2,Math.round((_z+d)*10)/10));
+    document.getElementById('doc').style.zoom=_z;
+    var l=document.getElementById('zlbl'); if(l) l.textContent=Math.round(_z*100)+'%'; };
+
+  // ===== autosave: não perder ao atualizar a página =====
+  var SKEY='quadro_cintura_escapular_v2', _saveT, _warned=false;
+  function cleanedDoc(){
+    var c=document.getElementById('doc').cloneNode(true);
+    c.querySelectorAll('.delbtn,.imgbtn,.imgzoom').forEach(function(e){e.remove();});
+    c.querySelectorAll('.addbtn').forEach(function(e){ if(!e.closest('.tblcard')) e.remove(); });
+    c.querySelectorAll('[data-c]').forEach(function(e){e.removeAttribute('data-c');});
+    c.querySelectorAll('[data-b]').forEach(function(e){e.removeAttribute('data-b');});
+    c.querySelectorAll('[data-s]').forEach(function(e){e.removeAttribute('data-s');});
+    c.querySelectorAll('[data-w]').forEach(function(e){e.removeAttribute('data-w');});
+    c.querySelectorAll('input[type=file]').forEach(function(i){i.value='';});
+    return c.innerHTML;
+  }
+  function doSave(){
+    try{ localStorage.setItem(SKEY, cleanedDoc());
+      var l=document.getElementById('savedlbl'); if(l){l.textContent='guardado ✓';l.style.opacity='1';
+        clearTimeout(l._t); l._t=setTimeout(function(){l.style.opacity='0';},1400);}
+    }catch(e){ if(!_warned){ _warned=true; var l=document.getElementById('savedlbl');
+      if(l){l.textContent='autosave cheio — usa Exportar HTML';l.style.opacity='1';} } }
+  }
+  function queueSave(){ clearTimeout(_saveT); _saveT=setTimeout(doSave,1000); }
+  function startAutosave(){
+    new MutationObserver(queueSave).observe(document.getElementById('doc'),
+      {subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['src','style']});
+  }
+  function restoreSaved(){
+    try{ var s=localStorage.getItem(SKEY); if(s){ document.getElementById('doc').innerHTML=s; return true; } }catch(e){}
+    return false;
+  }
+  window.clearSaved=function(){
+    if(confirm('Apagar as alterações guardadas neste dispositivo e repor a versão inicial?')){
+      try{localStorage.removeItem(SKEY);}catch(e){} location.reload();
+    }
+  };
+
+  // ===== colar imagens (Ctrl+V) + cor do texto =====
+  var activeSlot=null;
+  function setActive(s){
+    document.querySelectorAll('.slot.active').forEach(function(x){x.classList.remove('active');});
+    if(s){s.classList.add('active');activeSlot=s;}
+  }
+  document.addEventListener('click',function(e){
+    var s=e.target.closest('.slot'); if(s) setActive(s);
+  });
+  document.addEventListener('paste',function(e){
+    var dt=e.clipboardData; if(!dt) return;
+    var imgItem=null;
+    for(var i=0;i<dt.items.length;i++){ var it=dt.items[i];
+      if(it.type && it.type.indexOf('image')===0){imgItem=it;break;} }
+    if(imgItem){
+      e.preventDefault(); var blob=imgItem.getAsFile(); if(!blob) return;
+      var r=new FileReader(); r.onload=function(){
+        var tgt=activeSlot||document.querySelector('.slot.empty');
+        if(tgt){ setSlotImage(tgt,r.result); setActive(tgt); }
+        else alert('Clica primeiro num espaço de imagem (fica com contorno azul) e depois cola com Ctrl+V.');
+      }; r.readAsDataURL(blob); return;
+    }
+    var t=dt.getData && dt.getData('text/plain');
+    if(t!=null && document.activeElement && document.activeElement.isContentEditable){
+      e.preventDefault(); document.execCommand('insertText',false,t);
+    }
+  });
+  window.setColor=function(c){ try{document.execCommand('styleWithCSS',false,true);}catch(e){}
+    document.execCommand('foreColor',false,c); };
+
+  restoreSaved();
   inject();
+  setTimeout(startAutosave,500);
 
   // ===== tabela estilo Word =====
   function newColHead(){var th=document.createElement('th');th.contentEditable='true';
@@ -461,12 +599,13 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     var clone=document.documentElement.cloneNode(true);
     var bd=clone.querySelector('body'); if(bd) bd.classList.remove('exporting','export-wide');
     // remover controlos injetados (serão reconstruídos com funções ao reabrir)
-    clone.querySelectorAll('.delbtn,.imgbtn').forEach(function(e){e.remove();});
+    clone.querySelectorAll('.delbtn,.imgbtn,.imgzoom').forEach(function(e){e.remove();});
     clone.querySelectorAll('.addbtn').forEach(function(e){ if(!e.closest('.tblcard')) e.remove(); });
     // limpar marcas para o inject() correr de novo
     clone.querySelectorAll('[data-c]').forEach(function(e){e.removeAttribute('data-c');});
     clone.querySelectorAll('[data-b]').forEach(function(e){e.removeAttribute('data-b');});
     clone.querySelectorAll('[data-s]').forEach(function(e){e.removeAttribute('data-s');});
+    clone.querySelectorAll('[data-w]').forEach(function(e){e.removeAttribute('data-w');});
     clone.querySelectorAll('input[type=file]').forEach(function(i){i.value='';});
     var html='<!doctype html>\n'+clone.outerHTML;
     var blob=new Blob([html],{type:'text/html'});
@@ -493,6 +632,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
   }
   async function runExport(kind){
     var btns=document.querySelectorAll('.bar button');btns.forEach(function(b){b.disabled=true;});
+    var _pz=document.getElementById('doc').style.zoom; document.getElementById('doc').style.zoom='1';
     document.body.classList.add('exporting','export-wide');
     await new Promise(function(r){setTimeout(r,80);});
     try{
@@ -515,6 +655,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       }
     }catch(e){alert('Erro ao gerar imagem: '+e+'. Use «Imprimir / PDF».');}
     document.body.classList.remove('exporting','export-wide');
+    document.getElementById('doc').style.zoom=_pz||'';
     btns.forEach(function(b){b.disabled=false;});
   }
   window.savePNG=function(){return runExport('png');};
