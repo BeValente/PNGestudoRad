@@ -2,10 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quadro editável — Síndromes de compressão da cintura escapular</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Source+Serif+4:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--ink:#20242b;--mut:#5d6470;--line:#d9d3c6;--paper:#f6f2e9;--card:#fffdf8}
-body{font-family:'Source Sans 3',Segoe UI,sans-serif;color:var(--ink);background:#e9e4d8}
+body{font-family:'Segoe UI',Roboto,Arial,sans-serif,Segoe UI,sans-serif;color:var(--ink);background:#e9e4d8}
 [contenteditable]{outline:none;border-radius:3px;transition:.12s}
 [contenteditable]:hover{box-shadow:0 0 0 2px rgba(201,162,51,.45)}
 [contenteditable]:focus{box-shadow:0 0 0 2px #d99a1f;background:rgba(255,214,90,.20)}
@@ -13,9 +12,9 @@ body{font-family:'Source Sans 3',Segoe UI,sans-serif;color:var(--ink);background
 
 .bar{position:sticky;top:0;z-index:50;background:#13314c;color:#fff;display:flex;
  align-items:center;gap:10px;padding:10px 20px;box-shadow:0 2px 8px rgba(0,0,0,.25);flex-wrap:wrap}
-.bar b{font-family:'Archivo';font-weight:800;font-size:15px;letter-spacing:.3px}
+.bar b{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:800;font-size:15px;letter-spacing:.3px}
 .bar .hint{font-size:12px;color:#bfe0f5;flex:1;min-width:240px}
-.bar button{font-family:'Archivo';font-weight:700;font-size:13px;border:0;border-radius:7px;
+.bar button{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:700;font-size:13px;border:0;border-radius:7px;
  padding:8px 13px;cursor:pointer;background:#2e6fae;color:#fff}
 .bar button:hover{background:#3b84cc}
 .bar button.ghost{background:transparent;border:1.5px solid #5d86ad}
@@ -33,34 +32,32 @@ body{font-family:'Source Sans 3',Segoe UI,sans-serif;color:var(--ink);background
 .title{background:linear-gradient(100deg,#0f2740,#1d4365 60%,#11314c);color:#fff;
  border-radius:16px;padding:24px 34px;display:flex;align-items:center;justify-content:space-between;
  box-shadow:0 6px 22px rgba(15,39,64,.28)}
-.title h1{font-family:'Archivo';font-weight:900;font-size:50px;line-height:1.02}
+.title h1{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:900;font-size:50px;line-height:1.02}
 .title h1 small{display:block;font-size:21px;font-weight:600;color:#bfe0f5;letter-spacing:1.5px;margin-top:7px}
-.title .sub{text-align:right;font-family:'Source Serif 4',Georgia,serif;font-style:italic;
+.title .sub{text-align:right;font-family:Georgia,serif,Georgia,serif;font-style:italic;
  font-size:18px;color:#d6e6f3;max-width:520px;line-height:1.35}
 
 .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:20px;align-items:start}
 .panel{background:var(--card);border:1px solid var(--line);border-top:6px solid var(--accent);
  border-radius:12px;padding:0 0 14px;box-shadow:0 3px 10px rgba(40,40,40,.06);overflow:hidden}
 .ph2{background:var(--accent);color:#fff;display:flex;gap:11px;align-items:center;padding:12px 14px}
-.pnum{font-family:'Archivo';font-weight:900;font-size:30px;background:rgba(255,255,255,.22);
+.pnum{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:900;font-size:30px;background:rgba(255,255,255,.22);
  min-width:42px;height:42px;border-radius:9px;display:flex;align-items:center;justify-content:center}
-.preg{font-family:'Archivo';font-weight:800;font-size:17.5px;line-height:1.06}
+.preg{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:800;font-size:17.5px;line-height:1.06}
 .pnerve{font-size:13.5px;opacity:.92;font-style:italic;margin-top:2px}
 .anatwrap{padding:6px 8px 0;display:flex;justify-content:center}
 .musclot{position:relative;width:100%;max-width:250px}
 .anat{width:100%;height:auto;display:block}
 .musc{margin:6px 12px 2px;font-size:15px;line-height:1.3}
 .rm{margin:8px 12px 4px;font-size:13.5px;line-height:1.34;color:#2a2f37}
-.tag{display:inline-block;font-family:'Archivo';font-weight:800;font-size:10.5px;letter-spacing:.6px;
+.tag{display:inline-block;font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:800;font-size:10.5px;letter-spacing:.6px;
  background:#ece6d8;color:#54493a;padding:2px 7px;border-radius:5px;margin-right:6px;vertical-align:1px}
 .tag-rm{background:var(--accent);color:#fff}
 .imggroup{margin:0}
 .mri,.refimg{position:relative;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#0c0c0c;display:flex;flex-direction:column}
 .mri{margin:8px 12px 0}
-.imgbox{width:100%;background:#000;overflow:hidden;resize:both;display:block;position:relative;min-height:70px}
-.mri .imgbox{height:200px}
-.refimg .imgbox{height:300px}
-.imgbox img{width:100%;height:100%;object-fit:contain;display:block;transform-origin:center center;cursor:grab;touch-action:none}
+.imgbox{width:100%;background:transparent;overflow:hidden;resize:both;display:block;position:relative;line-height:0}
+.imgbox img{width:100%;height:auto;display:block;transform-origin:center center;cursor:grab;touch-action:none}
 .imgbox img.dragging{cursor:grabbing}
 .imgbox::-webkit-resizer{background:#2e6fae}
 .imgzoom{position:absolute;left:5px;bottom:5px;display:flex;gap:3px;opacity:0;transition:.12s;z-index:7}
@@ -81,15 +78,15 @@ body{font-family:'Source Sans 3',Segoe UI,sans-serif;color:var(--ink);background
 li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 .imgbtn{position:absolute;top:6px;left:6px;z-index:8;border:0;border-radius:6px;cursor:pointer;
  background:rgba(20,49,76,.88);color:#fff;font-size:11px;font-weight:700;padding:4px 8px;
- font-family:'Archivo';opacity:0;transition:.12s}
+ font-family:'Segoe UI',Roboto,Arial,sans-serif;opacity:0;transition:.12s}
 .slot:hover>.imgbtn{opacity:1}
 .addbtn{display:inline-flex;align-items:center;gap:5px;margin:7px 12px 0;border:1.5px dashed #b9af96;
- background:#fbf8ef;color:#6a5f48;font-family:'Archivo';font-weight:700;font-size:11.5px;
+ background:#fbf8ef;color:#6a5f48;font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:700;font-size:11.5px;
  border-radius:7px;padding:4px 10px;cursor:pointer}
 .addbtn:hover{background:#f2ebd9;border-color:#8c8163}
 
 .block{margin:9px 12px 0}
-.bh{font-family:'Archivo';font-weight:800;font-size:11px;letter-spacing:.7px;color:var(--accent);
+.bh{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:800;font-size:11px;letter-spacing:.7px;color:var(--accent);
  border-bottom:1.5px solid var(--accent);padding-bottom:3px;margin-bottom:4px}
 .elist{list-style:none}
 .elist li{font-size:12.7px;line-height:1.38;padding-left:13px;position:relative;margin-bottom:2px}
@@ -99,15 +96,15 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 
 .foot{display:grid;grid-template-columns:1.55fr 1fr;gap:16px;margin-top:18px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 3px 10px rgba(40,40,40,.06)}
-.cardh{font-family:'Archivo';font-weight:900;font-size:17px;letter-spacing:.5px;color:#13314c;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.cardh{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:900;font-size:17px;letter-spacing:.5px;color:#13314c;margin-bottom:12px;display:flex;align-items:center;gap:9px}
 .cardh:before{content:"";width:7px;height:22px;background:#13314c;border-radius:3px}
 .chainrow{display:flex;align-items:stretch;flex-wrap:wrap;gap:7px}
 .chip{position:relative;background:#fff;border:1.5px solid var(--c);border-left:6px solid var(--c);border-radius:8px;padding:7px 11px;flex:1;min-width:150px}
-.chip b{display:block;font-size:14px;color:var(--c);font-family:'Archivo';font-weight:800}
+.chip b{display:block;font-size:14px;color:var(--c);font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:800}
 .chip span{font-size:12.5px;color:#333}
 .patt{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .pcell{position:relative;border-radius:9px;padding:11px 12px;color:#fff}
-.pcell h4{font-family:'Archivo';font-size:14px;letter-spacing:.5px;margin-bottom:3px}
+.pcell h4{font-family:'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;letter-spacing:.5px;margin-bottom:3px}
 .pcell p{font-size:12px;line-height:1.33}
 .p1{background:#c0392b}.p2{background:#d98a1f}.p3{background:#2c3e50}
 .hy{margin-top:18px}
@@ -124,7 +121,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 .utbl-wrap{overflow-x:auto}
 .utbl{border-collapse:collapse;width:100%;font-size:13.5px}
 .utbl th,.utbl td{border:1px solid #cabfa6;padding:7px 10px;text-align:left;vertical-align:top;min-width:80px}
-.utbl thead th{background:#13314c;color:#fff;font-family:'Archivo';font-weight:700;position:relative}
+.utbl thead th{background:#13314c;color:#fff;font-family:'Segoe UI',Roboto,Arial,sans-serif;font-weight:700;position:relative}
 .utbl tbody td{background:#fff}
 .utbl tbody tr:nth-child(even) td{background:#faf7ef}
 .utbl .tctl{min-width:30px;width:30px;text-align:center;background:#efe9da;padding:2px}
@@ -201,7 +198,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
  .title{flex-direction:row!important} .title h1{font-size:50px!important}
  [contenteditable]:hover,[contenteditable]:focus{box-shadow:none;background:transparent}
 }
-</style></head><body>
+</style></head><body data-docid="branco">
 
 <div class="bar">
   <b>QUADRO EDITÁVEL</b>
@@ -391,6 +388,15 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     d.addEventListener('click',function(){li.remove();});
     li.appendChild(d);
   }
+  function fitAspect(box){
+    if(!box || box.style.width) return; // redimensionada à mão -> respeitar
+    var img=box.querySelector('img'); if(!img) return;
+    function go(){ var w=box.clientWidth||box.offsetWidth;
+      if(!w||!img.naturalWidth) return;
+      var h=Math.max(90,Math.min(720,Math.round(w*img.naturalHeight/img.naturalWidth)));
+      box.style.height=h+'px'; }
+    if(img.complete && img.naturalWidth) go(); else img.addEventListener('load',go,{once:true});
+  }
   function wireImage(box){
     if(!box || box.dataset.w) return; var img=box.querySelector('img'); if(!img) return;
     box.dataset.w='1';
@@ -432,7 +438,8 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     if(!box){box=document.createElement('div');box.className='imgbox';
       var im=document.createElement('img');box.appendChild(im);
       s.insertBefore(box, s.querySelector('input'));}
-    var bi=box.querySelector('img'); bi.dataset.tf=''; bi.style.transform=''; bi.src=src;
+    var bi=box.querySelector('img'); bi.dataset.tf=''; bi.style.transform='';
+    box.style.width=''; box.style.height=''; bi.src=src;
     wireImage(box);
   }
   function bindSlot(s){
@@ -500,7 +507,8 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     var l=document.getElementById('zlbl'); if(l) l.textContent=Math.round(_z*100)+'%'; };
 
   // ===== autosave: não perder ao atualizar a página =====
-  var SKEY='quadro_cintura_escapular_v2', _saveT, _warned=false;
+  var DOCID=document.body.getAttribute('data-docid')||'base';
+  var SKEY='quadro_'+DOCID, _saveT, _warned=false;
   function cleanedDoc(){
     var c=document.getElementById('doc').cloneNode(true);
     c.querySelectorAll('.delbtn,.imgbtn,.imgzoom').forEach(function(e){e.remove();});
@@ -512,12 +520,33 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     c.querySelectorAll('input[type=file]').forEach(function(i){i.value='';});
     return c.innerHTML;
   }
+  // armazenamento: IndexedDB (grande) com recurso a localStorage
+  function idb(){ return new Promise(function(res,rej){ try{ var r=indexedDB.open('quadroDB',1);
+    r.onupgradeneeded=function(){ r.result.createObjectStore('docs'); };
+    r.onsuccess=function(){res(r.result);}; r.onerror=function(){rej(r.error);};
+  }catch(e){rej(e);} }); }
+  function idbSet(k,v){ return idb().then(function(db){ return new Promise(function(res,rej){
+    var tx=db.transaction('docs','readwrite'); tx.objectStore('docs').put(v,k);
+    tx.oncomplete=function(){res(true);}; tx.onerror=function(){rej(tx.error);}; }); }); }
+  function idbGet(k){ return idb().then(function(db){ return new Promise(function(res,rej){
+    var tx=db.transaction('docs','readonly'); var q=tx.objectStore('docs').get(k);
+    q.onsuccess=function(){res(q.result);}; q.onerror=function(){rej(q.error);}; }); }); }
+  function idbDel(k){ return idb().then(function(db){ return new Promise(function(res){
+    var tx=db.transaction('docs','readwrite'); tx.objectStore('docs').delete(k);
+    tx.oncomplete=function(){res(true);}; }); }); }
+  function storeSet(k,v){ return idbSet(k,v).catch(function(){
+    return new Promise(function(res,rej){ try{localStorage.setItem(k,v);res(true);}catch(e){rej(e);} }); }); }
+  function storeGet(k){ return idbGet(k).then(function(v){ if(v!=null) return v;
+    try{return localStorage.getItem(k);}catch(e){return null;} }).catch(function(){
+    try{return localStorage.getItem(k);}catch(e){return null;} }); }
+  function storeDel(k){ return idbDel(k).catch(function(){}).then(function(){ try{localStorage.removeItem(k);}catch(e){} }); }
+
   function doSave(){
-    try{ localStorage.setItem(SKEY, cleanedDoc());
-      var l=document.getElementById('savedlbl'); if(l){l.textContent='guardado ✓';l.style.opacity='1';
-        clearTimeout(l._t); l._t=setTimeout(function(){l.style.opacity='0';},1400);}
-    }catch(e){ if(!_warned){ _warned=true; var l=document.getElementById('savedlbl');
-      if(l){l.textContent='autosave cheio — usa Exportar HTML';l.style.opacity='1';} } }
+    var l=document.getElementById('savedlbl');
+    storeSet(SKEY, cleanedDoc()).then(function(){
+      if(l){l.textContent='guardado ✓';l.style.opacity='1';clearTimeout(l._t);
+        l._t=setTimeout(function(){l.style.opacity='0';},1400);}
+    }).catch(function(){ if(!_warned){_warned=true; if(l){l.textContent='não foi possível guardar — usa Exportar HTML';l.style.opacity='1';} } });
   }
   function queueSave(){ clearTimeout(_saveT); _saveT=setTimeout(doSave,1000); }
   function startAutosave(){
@@ -525,12 +554,19 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       {subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['src','style']});
   }
   function restoreSaved(){
-    try{ var s=localStorage.getItem(SKEY); if(s){ document.getElementById('doc').innerHTML=s; return true; } }catch(e){}
-    return false;
+    return storeGet(SKEY).then(function(s){
+      if(!(s&&s.length>40) && DOCID.indexOf('exp_')!==0){
+        try{ var o1=localStorage.getItem(SKEY); if(o1&&o1.length>40) s=o1;
+          else { var o2=localStorage.getItem('quadro_cintura_escapular_v2'); if(o2&&o2.length>40) s=o2; }
+        }catch(e){}
+      }
+      if(s&&s.length>40){ document.getElementById('doc').innerHTML=s; return true; }
+      return false;
+    }).catch(function(){return false;});
   }
   window.clearSaved=function(){
     if(confirm('Apagar as alterações guardadas neste dispositivo e repor a versão inicial?')){
-      try{localStorage.removeItem(SKEY);}catch(e){} location.reload();
+      storeDel(SKEY).then(function(){location.reload();});
     }
   };
 
@@ -564,9 +600,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
   window.setColor=function(c){ try{document.execCommand('styleWithCSS',false,true);}catch(e){}
     document.execCommand('foreColor',false,c); };
 
-  restoreSaved();
-  inject();
-  setTimeout(startAutosave,500);
+  restoreSaved().then(function(){ inject(); setTimeout(startAutosave,600); });
 
   // ===== tabela estilo Word =====
   function newColHead(){var th=document.createElement('th');th.contentEditable='true';
@@ -597,7 +631,8 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 
   window.exportHTML=function(){
     var clone=document.documentElement.cloneNode(true);
-    var bd=clone.querySelector('body'); if(bd) bd.classList.remove('exporting','export-wide');
+    var bd=clone.querySelector('body'); if(bd){ bd.classList.remove('exporting','export-wide');
+      bd.setAttribute('data-docid','exp_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)); }
     // remover controlos injetados (serão reconstruídos com funções ao reabrir)
     clone.querySelectorAll('.delbtn,.imgbtn,.imgzoom').forEach(function(e){e.remove();});
     clone.querySelectorAll('.addbtn').forEach(function(e){ if(!e.closest('.tblcard')) e.remove(); });
@@ -634,7 +669,8 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     var btns=document.querySelectorAll('.bar button');btns.forEach(function(b){b.disabled=true;});
     var _pz=document.getElementById('doc').style.zoom; document.getElementById('doc').style.zoom='1';
     document.body.classList.add('exporting','export-wide');
-    await new Promise(function(r){setTimeout(r,80);});
+    try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+    await new Promise(function(r){setTimeout(r,350);});
     try{
       var canvas=await captureCanvas();
       if(kind==='png'){ dl(canvas.toDataURL('image/png'),'quadro_cintura_escapular.png'); }
