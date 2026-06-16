@@ -54,7 +54,7 @@ body{font-family:'Segoe UI',Roboto,Arial,sans-serif,Segoe UI,sans-serif;color:va
  background:#ece6d8;color:#54493a;padding:2px 7px;border-radius:5px;margin-right:6px;vertical-align:1px}
 .tag-rm{background:var(--accent);color:#fff}
 .imggroup{margin:0}
-.mri,.refimg{position:relative;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#0c0c0c;display:flex;flex-direction:column}
+.mri,.refimg{position:relative;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:transparent;display:flex;flex-direction:column}
 .mri{margin:8px 12px 0}
 .imgbox{width:100%;background:transparent;overflow:hidden;resize:both;display:block;position:relative;line-height:0}
 .imgbox img{width:100%;height:auto;display:block;transform-origin:center center;cursor:grab;touch-action:none}
@@ -159,7 +159,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
   .patt{grid-template-columns:1fr}
   .title{flex-direction:column;align-items:flex-start;gap:8px}
   .title .sub{text-align:left} .title h1{font-size:26px}
-  .refimg img{height:auto;max-height:340px}
+  .refimg img{height:auto}
   .mri img{max-height:none}
   .musclot{max-width:300px}
   .bar .hint{display:none} .bar b{font-size:13px} .bar button{font-size:12px;padding:7px 11px}
@@ -181,7 +181,6 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 .export-wide .title{flex-direction:row!important;align-items:center!important;gap:0!important;padding:24px 34px!important}
 .export-wide .title .sub{text-align:right!important;font-size:18px!important;max-width:520px!important}
 .export-wide .title h1{font-size:50px!important} .export-wide .title h1 small{font-size:21px!important}
-.export-wide .refimg img{height:300px!important} .export-wide .mri img{max-height:215px!important}
 
 @media print{
  @page{size:2010px 1540px;margin:0}
@@ -201,8 +200,8 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 </style></head><body data-docid="branco">
 
 <div class="bar">
-  <b>QUADRO EDITÁVEL</b>
-  <span class="hint">Texto: clicar e escrever · «＋»/«✕» add/remover · Imagem: <b>arrasta para mover</b>, roda do rato ou «＋－» para zoom, canto p/ redimensionar a moldura, «🖼» trocar, <b>Ctrl+V</b> para colar print.</span>
+  <b>QUADRO EDITÁVEL <span style="font-weight:600;opacity:.7;font-size:11px">v9 · imagens proporcionais</span></b>
+  <span class="hint">Texto: clicar e escrever · «＋»/«✕» add/remover · Imagem: <b>Ctrl+V</b> para colar, <b>arrasta para mover</b>, roda do rato ou «＋ －» para zoom, «🖼» trocar, «✕» apagar.</span>
   <span class="textcol">Cor:
     <button onmousedown="event.preventDefault()" onclick="setColor('#20242b')" style="background:#20242b" title="Preto"></button>
     <button onmousedown="event.preventDefault()" onclick="setColor('#ffffff')" style="background:#fff" title="Branco"></button>
@@ -233,7 +232,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div><div class="preg" contenteditable="true" data-ph="Região / nível"></div>
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
-      <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
+      <div class="anatwrap"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Desenho / imagem do músculo · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
       <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
       <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
@@ -247,7 +246,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div><div class="preg" contenteditable="true" data-ph="Região / nível"></div>
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
-      <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
+      <div class="anatwrap"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Desenho / imagem do músculo · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
       <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
       <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
@@ -261,7 +260,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div><div class="preg" contenteditable="true" data-ph="Região / nível"></div>
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
-      <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
+      <div class="anatwrap"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Desenho / imagem do músculo · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
       <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
       <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
@@ -275,7 +274,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div><div class="preg" contenteditable="true" data-ph="Região / nível"></div>
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
-      <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
+      <div class="anatwrap"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Desenho / imagem do músculo · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
       <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
       <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
@@ -289,7 +288,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div><div class="preg" contenteditable="true" data-ph="Região / nível"></div>
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
-      <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
+      <div class="anatwrap"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Desenho / imagem do músculo · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
       <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
       <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
@@ -303,7 +302,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         <div><div class="preg" contenteditable="true" data-ph="Região / nível"></div>
         <div class="pnerve" contenteditable="true" data-ph="Nervo"></div></div>
       </header>
-      <div class="anatwrap"><div class="musclot slot nodelete empty"><div class="ph">&#65291; Desenho / imagem do músculo</div><input type="file" accept="image/*" hidden></div></div>
+      <div class="anatwrap"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Desenho / imagem do músculo · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
       <div class="musc"><span class="tag" contenteditable="true">MÚSCULOS</span><span contenteditable="true" data-ph="Músculo(s) afetado(s)…"></span></div>
       <div class="rm"><span class="tag tag-rm" contenteditable="true">RM · PADRÃO</span><span contenteditable="true" data-ph="Padrão na RM…"></span></div>
       <div class="imggroup"><figure class="mri slot empty"><div class="ph">&#65291; Adicionar imagem<br><small>Imagem (RM, esquema…) · ou cola com Ctrl+V</small></div><input type="file" accept="image/*" hidden></figure></div>
@@ -453,8 +452,17 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       r.onload=function(){ setSlotImage(s,r.result); }; r.readAsDataURL(f);
     });
     if(!s.classList.contains('nodelete')){
-      var d=mk('button','delbtn sl','&times;'); d.contentEditable='false'; d.title='Remover imagem';
-      d.addEventListener('click',function(){s.remove();});
+      var d=mk('button','delbtn sl','&times;'); d.contentEditable='false'; d.title='Apagar imagem';
+      d.addEventListener('click',function(){
+        if(s.closest('.anatwrap')){
+          var bx=s.querySelector('.imgbox'); if(bx) bx.remove();
+          var im=s.querySelector(':scope > img'); if(im) im.remove();
+          s.classList.add('empty');
+          if(!s.querySelector('.ph')){ var ph=document.createElement('div'); ph.className='ph';
+            ph.innerHTML='&#65291; Desenho / imagem do músculo<br><small>ou cola com Ctrl+V</small>';
+            s.insertBefore(ph, s.firstChild); }
+        } else { s.remove(); }
+      });
       s.appendChild(d);
     }
   }
@@ -481,6 +489,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       g.parentNode.insertBefore(add, g.nextSibling);
     });
     document.querySelectorAll('.musclot').forEach(bindSlot);
+    document.querySelectorAll('.anatwrap > .slot').forEach(bindSlot);
     document.querySelectorAll('.imgbox').forEach(wireImage);
     setupTable();
     document.querySelectorAll('.chipgroup').forEach(function(g){
