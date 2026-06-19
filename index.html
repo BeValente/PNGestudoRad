@@ -59,7 +59,7 @@ body{font-family:'Segoe UI',Roboto,Arial,sans-serif,Segoe UI,sans-serif;color:va
 .imgbox{width:100%;background:transparent;overflow:hidden;resize:both;display:block;position:relative;line-height:0}
 .imgbox img{width:100%;height:auto;display:block;transform-origin:center center;cursor:grab;touch-action:none}
 .imgbox img.dragging{cursor:grabbing}
-.imgbox::-webkit-resizer{background:#2e6fae}
+.imgbox::-webkit-resizer{background:#2e6fae}.imgbox::-webkit-resizer{background:#2e6fae;width:16px;height:16px}.imgbox::after{content:"\2921";position:absolute;right:1px;bottom:0;font-size:13px;color:#fff;background:#2e6fae;padding:0 3px;border-radius:4px 0 0 0;pointer-events:none;line-height:1.2;opacity:.92}.fmt{display:inline-flex;gap:3px;margin:0 4px}.fmt button{min-width:26px;height:26px;border:1px solid #c9bfa6;background:#fbf8ef;border-radius:6px;cursor:pointer;font-size:14px;color:#33405a}.fmt button:hover{background:#f0e9d7}.zlab{font-weight:600;font-size:10.5px;opacity:.65;margin-right:4px}
 .imgzoom{position:absolute;left:5px;bottom:5px;display:flex;gap:3px;opacity:0;transition:.12s;z-index:7}
 .slot:hover .imgzoom,.slot.active .imgzoom{opacity:1}
 .imgzoom button{width:24px;height:22px;border:0;border-radius:5px;background:rgba(20,49,76,.92);color:#fff;font-size:14px;font-weight:800;cursor:pointer;line-height:1}
@@ -108,7 +108,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 .pcell p{font-size:12px;line-height:1.33}
 .p1{background:#c0392b}.p2{background:#d98a1f}.p3{background:#2c3e50}
 .hy{margin-top:18px}
-.hybul{columns:2;column-gap:46px;margin:0 0 10px;list-style:none}
+.hybul{columns:1;margin:0 0 10px;list-style:none}
 .hybul li{font-size:13.5px;line-height:1.45;margin-bottom:9px;padding-left:16px;position:relative;break-inside:avoid}
 .hybul li:before{content:"▸";position:absolute;left:0;top:0;color:#13314c;font-weight:900}
 .hybul b{color:#13314c}
@@ -167,7 +167,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 /* ecrãs táteis: controlos sempre visíveis (sem hover) */
 @media (hover:none){
   .delbtn,.imgbtn{opacity:1!important}
-  .delbtn{width:27px;height:27px;font-size:16px} .delbtn.li{right:-2px}
+  .delbtn{width:27px;height:27px;font-size:16px}.draghandle{position:absolute;left:-1px;top:3px;width:12px;text-align:center;color:#b3a98f;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;font-size:12px;line-height:1.1}.draghandle:active{cursor:grabbing}.draghandle:hover{color:#5b5238}.elist li{padding-left:20px}.elist li:before{left:11px}.hybul li{padding-left:30px}.hybul li:before{left:16px}li.dragging,.slot.dragging{opacity:.55;outline:2px dashed #2e6fae;outline-offset:1px}.slot{position:relative}.slot .draghandle.slh{left:50%;top:4px;transform:translateX(-50%);width:auto;padding:1px 8px;background:rgba(46,111,174,.92);color:#fff;font-size:11px;font-weight:600;border-radius:5px;z-index:5;line-height:1.5}.slot .draghandle.slh:hover{background:#2e6fae;color:#fff}.imggroup.blockimgs{margin:2px 0 0} .delbtn.li{right:-2px}
   .imgbtn{font-size:12px;padding:5px 9px}
   [contenteditable]:hover{box-shadow:none}
 }
@@ -176,7 +176,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 .export-wide .grid{grid-template-columns:repeat(6,1fr)!important;gap:16px!important}
 .export-wide .foot{grid-template-columns:1.55fr 1fr!important}
 .export-wide .gallery{grid-template-columns:repeat(4,1fr)!important}
-.export-wide .hybul{columns:2!important}
+.export-wide .hybul{columns:1!important}
 .export-wide .patt{grid-template-columns:repeat(3,1fr)!important}
 .export-wide .title{flex-direction:row!important;align-items:center!important;gap:0!important;padding:24px 34px!important}
 .export-wide .title .sub{text-align:right!important;font-size:18px!important;max-width:520px!important}
@@ -192,7 +192,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
  .grid{grid-template-columns:repeat(6,1fr)!important;gap:16px!important}
  .foot{grid-template-columns:1.55fr 1fr!important}
  .gallery{grid-template-columns:repeat(4,1fr)!important}
- .hybul{columns:2!important}
+ .hybul{columns:1!important}
  .patt{grid-template-columns:repeat(3,1fr)!important}
  .title{flex-direction:row!important} .title h1{font-size:50px!important}
  [contenteditable]:hover,[contenteditable]:focus{box-shadow:none;background:transparent}
@@ -200,8 +200,8 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 </style></head><body data-docid="branco">
 
 <div class="bar">
-  <b>QUADRO EDITÁVEL <span style="font-weight:600;opacity:.7;font-size:11px">v16 · espaço antes de + tópico</span></b>
-  <span class="hint">Texto: clicar e escrever · «＋»/«✕» add/remover · Imagem: <b>Ctrl+V</b> para colar, <b>arrasta para mover</b>, roda do rato ou «＋ －» para zoom, «🖼» trocar, «✕» apagar.</span>
+  <b>QUADRO EDITÁVEL <span style="font-weight:600;opacity:.7;font-size:11px">v18 · reordenar + imagens nos tópicos</span></b>
+  <span class="hint">Texto: clicar e escrever &middot; <b>negrito/it&aacute;lico/sublinhado</b> com Cmd/Ctrl+B/I/U ou os bot&otilde;es N I S &middot; Imagem: clica no espa&ccedil;o (fica azul) e cola com <b>Ctrl+V</b> &middot; canto azul &#10529; para redimensionar &middot; &laquo;&#128247;&raquo; trocar/substituir &middot; &laquo;&#10005;&raquo; apagar.</span>
   <span class="textcol">Cor:
     <button onmousedown="event.preventDefault()" onclick="setColor('#20242b')" style="background:#20242b" title="Preto"></button>
     <button onmousedown="event.preventDefault()" onclick="setColor('#ffffff')" style="background:#fff" title="Branco"></button>
@@ -209,7 +209,12 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     <button onmousedown="event.preventDefault()" onclick="setColor('#b3343a')" style="background:#b3343a" title="Vermelho"></button>
     <button onmousedown="event.preventDefault()" onclick="setColor('#2f7d4f')" style="background:#2f7d4f" title="Verde"></button>
   </span>
-  <span class="zoom"><button onclick="zoomBy(-0.1)" title="Reduzir">&minus;</button><span id="zlbl">100%</span><button onclick="zoomBy(0.1)" title="Aumentar">&plus;</button></span>
+  <span class="fmt">
+    <button onmousedown="event.preventDefault()" onclick="fmt('bold')" title="Negrito (Cmd/Ctrl+B)"><b>N</b></button>
+    <button onmousedown="event.preventDefault()" onclick="fmt('italic')" title="Itálico (Cmd/Ctrl+I)"><i>I</i></button>
+    <button onmousedown="event.preventDefault()" onclick="fmt('underline')" title="Sublinhado (Cmd/Ctrl+U)"><span style="text-decoration:underline">S</span></button>
+  </span>
+  <span class="zoom"><b class="zlab">Zoom da página</b><button onclick="zoomBy(-0.1)" title="Reduzir o quadro todo">&minus;</button><span id="zlbl">100%</span><button onclick="zoomBy(0.1)" title="Aumentar o quadro todo">&plus;</button></span>
   <button class="png" onclick="savePNG()">&#128247; Guardar PNG</button>
   <button class="jpg" onclick="saveJPG()">&#128247; Guardar JPG (≤300 KB)</button>
   <button onclick="window.print()">&#128424; Imprimir / PDF</button>
@@ -396,6 +401,11 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       d.addEventListener('click',function(){li.remove();});
       li.appendChild(d);
     }
+    if(!li.querySelector(':scope > .draghandle')){
+      var dh=mk('span','draghandle','&#8597;'); dh.contentEditable='false'; dh.title='Arrastar para reordenar';
+      dh.addEventListener('pointerdown',function(e){startSort(e, li, li.closest('ul'), ':scope > li');});
+      li.insertBefore(dh, li.firstChild);
+    }
   }
   function fitAspect(box){
     if(!box || box.style.width) return; // redimensionada à mão -> respeitar
@@ -453,6 +463,11 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
   }
   function bindSlot(s){
     if(s.dataset.b) return; s.dataset.b='1';
+    if(s.closest('.imggroup') && !s.querySelector(':scope > .draghandle')){
+      var dh=mk('span','draghandle slh','&#8597; mover'); dh.contentEditable='false'; dh.title='Arrastar para reordenar';
+      dh.addEventListener('pointerdown',function(e){startSort(e, s, s.closest('.imggroup'), ':scope > .slot');});
+      s.appendChild(dh);
+    }
     var inp=s.querySelector(':scope > input[type=file]');
     var t=mk('button','imgbtn','&#128247; trocar'); t.contentEditable='false';
     t.addEventListener('click',function(){inp&&inp.click();});
@@ -483,6 +498,23 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
     group.appendChild(fig); bindSlot(fig); setActive(fig);
   }
 
+  function afterEl(container,y,sel){
+    var els=[].slice.call(container.querySelectorAll(sel)).filter(function(e){return !e.classList.contains('dragging');});
+    var best={o:-Infinity,el:null};
+    for(var i=0;i<els.length;i++){var b=els[i].getBoundingClientRect();var off=y-b.top-b.height/2;
+      if(off<0 && off>best.o){best={o:off,el:els[i]};}}
+    return best.el;
+  }
+  function startSort(e,item,container,sel){
+    if(!container) return; e.preventDefault(); e.stopPropagation();
+    item.classList.add('dragging');
+    function move(ev){ var y=ev.clientY; if(y==null && ev.touches&&ev.touches[0])y=ev.touches[0].clientY;
+      var a=afterEl(container,y,sel); if(a==null)container.appendChild(item); else container.insertBefore(item,a); }
+    function up(){ item.classList.remove('dragging');
+      document.removeEventListener('pointermove',move); document.removeEventListener('pointerup',up);
+      try{queueSave();}catch(_){ } }
+    document.addEventListener('pointermove',move); document.addEventListener('pointerup',up);
+  }
   function inject(){
     document.querySelectorAll('button:not([type])').forEach(function(b){b.type='button';});
     document.querySelectorAll('.anatwrap .musclot').forEach(function(old){
@@ -508,13 +540,19 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       if(ul.dataset.c)return; ul.dataset.c='1';
       ul.querySelectorAll(':scope > li').forEach(addLiDel);
       var add=mk('button','addbtn','&#65291; tópico');
+      add.addEventListener('mousedown',function(ev){ev.preventDefault();});
       add.addEventListener('click',function(e){e.preventDefault();var li=document.createElement('li');ul.appendChild(li);addLiDel(li);focusEnd(li.querySelector('.litext'));li.scrollIntoView({block:'nearest'});});
       ul.parentNode.insertBefore(add, ul.nextSibling);
+      if(!ul.classList.contains('hybul') && !ul.parentNode.querySelector(':scope > .imggroup.blockimgs')){
+        var ig=document.createElement('div'); ig.className='imggroup blockimgs';
+        ul.parentNode.insertBefore(ig, add.nextSibling);
+      }
     });
     document.querySelectorAll('.imggroup').forEach(function(g){
       if(g.dataset.c)return; g.dataset.c='1';
       g.querySelectorAll(':scope > .slot').forEach(bindSlot);
       var add=mk('button','addbtn','&#65291; imagem');
+      add.addEventListener('mousedown',function(ev){ev.preventDefault();});
       add.addEventListener('click',function(){newSlot(g);});
       g.parentNode.insertBefore(add, g.nextSibling);
     });
@@ -550,7 +588,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
   var SKEY='quadro_'+DOCID, _saveT, _warned=false;
   function cleanedDoc(){
     var c=document.getElementById('doc').cloneNode(true);
-    c.querySelectorAll('.delbtn,.imgbtn,.imgzoom').forEach(function(e){e.remove();});
+    c.querySelectorAll('.delbtn,.imgbtn,.imgzoom,.draghandle').forEach(function(e){e.remove();});
     c.querySelectorAll('.addbtn').forEach(function(e){ if(!e.closest('.tblcard')) e.remove(); });
     c.querySelectorAll('[data-c]').forEach(function(e){e.removeAttribute('data-c');});
     c.querySelectorAll('[data-b]').forEach(function(e){e.removeAttribute('data-b');});
@@ -636,7 +674,17 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       e.preventDefault(); document.execCommand('insertText',false,t);
     }
   });
-  window.setColor=function(c){ try{document.execCommand('styleWithCSS',false,true);}catch(e){}
+  window.window.fmt=function(cmd){var ed=document.activeElement; if(ed&&ed.isContentEditable){document.execCommand(cmd,false,null);}};
+  document.addEventListener('keydown',function(e){
+    if(!(e.metaKey||e.ctrlKey)) return;
+    var k=(e.key||'').toLowerCase();
+    if(k==='b'||k==='i'||k==='u'){
+      var ed=document.activeElement;
+      if(ed && ed.isContentEditable){ e.preventDefault();
+        document.execCommand(k==='b'?'bold':(k==='i'?'italic':'underline'),false,null); }
+    }
+  });
+  setColor=function(c){ try{document.execCommand('styleWithCSS',false,true);}catch(e){}
     document.execCommand('foreColor',false,c); };
 
   restoreSaved().then(function(){ inject(); setTimeout(startAutosave,600); });
