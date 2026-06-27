@@ -244,7 +244,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
 </style></head><body data-docid="branco">
 
 <div class="bar">
-  <b>QUADRO EDITÁVEL <span style="font-weight:600;opacity:.7;font-size:11px">v28 · painéis com altura igual</span></b>
+  <b>QUADRO EDITÁVEL <span style="font-weight:600;opacity:.7;font-size:11px">v29 · painéis em área livre (como o print)</span></b>
   <span class="hint">Texto: clicar e escrever &middot; <b>negrito/it&aacute;lico/sublinhado</b> com Cmd/Ctrl+B/I/U ou os bot&otilde;es N I S &middot; Imagem: clica no espa&ccedil;o (fica azul) e cola com <b>Ctrl+V</b> &middot; canto azul &#10529; para redimensionar &middot; &laquo;&#128247;&raquo; trocar/substituir &middot; &laquo;&#10005;&raquo; apagar.</span>
   <span class="textcol">Cor:
     <button onmousedown="event.preventDefault()" onclick="setColor('#20242b')" style="background:#20242b" title="Preto"></button>
@@ -702,7 +702,7 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
         if(ch.querySelectorAll){ ch.querySelectorAll('[data-ph]').forEach(function(ed){ var t=(ed.textContent||'').replace(/\s+/g,' ').trim(); if(t) texts.push(t); }); }
         if(ch.matches && ch.matches('[data-ph]')){ var t2=(ch.textContent||'').replace(/\s+/g,' ').trim(); if(t2) texts.push(t2); }
       });
-      [].slice.call(card.children).forEach(function(ch){ if(ch!==keep && ch!==fw && !ch.classList.contains('freewrap')) ch.remove(); });
+      [].slice.call(card.children).forEach(function(ch){ if(ch!==keep && ch!==fw && !ch.classList.contains('freewrap') && !ch.classList.contains('sechandle')) ch.remove(); });
       if(!card.querySelector(':scope > .freewrap')) card.appendChild(fw);
       cv=fw.querySelector('.freecanvas');
       var ty=14;
@@ -732,16 +732,9 @@ li:hover>.delbtn,.slot:hover>.delbtn,.chip:hover>.delbtn{opacity:1}
       });
     }catch(_sec){ try{console.warn('sec',_sec);}catch(e){} }
     try{
-      var _hy=null; document.querySelectorAll('.card.hy').forEach(function(c){_hy=c;});
-      if(_hy && !_hy.querySelector('.freewrap')){
-        var fw0=document.createElement('div'); fw0.className='freewrap';
-        fw0.innerHTML='<div class="freehead"><div class="cardh" contenteditable="true">MONTAGEM LIVRE</div>'
-          +'<button type="button" class="freebtn" data-fa="text">\uFF0B caixa de texto</button>'
-          +'<button type="button" class="freebtn" data-fa="img">\uFF0B imagem</button>'
-          +'<span class="freehint">arrasta para onde quiseres</span></div>'
-          +'<div class="freecanvas"></div>';
-        var gal=_hy.querySelector('.gallery'); if(gal && gal.nextSibling) _hy.insertBefore(fw0, gal.nextSibling); else _hy.appendChild(fw0);
-      }
+      document.querySelectorAll('.panel').forEach(function(c){ convertCardToFree(c,'header.ph2'); });
+      document.querySelectorAll('.foot > .card').forEach(function(c){ convertCardToFree(c,'.cardh'); });
+      document.querySelectorAll('.card.hy').forEach(function(c){ convertCardToFree(c,'.cardh'); });
       document.querySelectorAll('.freewrap').forEach(function(fw){
         var cv=fw.querySelector('.freecanvas');
         fw.querySelectorAll('.freebtn').forEach(function(btn){ if(btn.dataset.b)return; btn.dataset.b='1';
